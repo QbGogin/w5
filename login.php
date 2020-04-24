@@ -117,7 +117,7 @@ else {
             $values['ability6'] = $row['ability6'];
             $values['ability7'] = $row['ability7'];
             $values['ability8'] = $row['ability8'];
-            $values['osene'] = $row['osebe'];
+            $values['oseиe'] = $row['osebe'];
             $values['kontract'] = $row['kontract'];
             setcookie('save', '1');
             header('Location: index.php');

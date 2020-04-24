@@ -10,9 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		setcookie('login', '', 100000);
     	setcookie('pass', '', 100000);
 		$messages[] = 'Спасибо, результаты сохранены.';
-	}
-
-	if (!empty($_COOKIE['pass'])) {
+	    if (!empty($_COOKIE['pass'])) {
 		$messages[] = sprintf("Вы можете <a href='login.php'>Войти</a> с логином <strong>%s</strong> и паролем <strong>%s</strong> для изменения данных.",
 		strip_tags($_COOKIE['login']),
 		strip_tags($_COOKIE['pass']));
@@ -120,10 +118,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	 include('myPHP.php');
 	}
 
-	else{
+	else {
 		$action = $_POST['save'];
 		switch ($action){
-		  case 'выйти':{//выходим из сессии и возвращаемся к index.php
+		  case 'выйти':{
 			$values = array();
 			$values['name'] = null;
 			$values['email'] = null;
@@ -166,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			header('Location: index.php');
 			break;
 		  }
-		  case 'войти':{//выходим из сессии и логинимся в login.php
+		  case 'войти':{
 			$values = array();
 			$values['name'] = null;
 			$values['email'] = null;
@@ -209,8 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			header('Location: login.php');
 			break;
 		  }
-		  case 'сохранить':{//сохраняем данные
-			// Проверяем ошибки.
+		  case 'сохранить':{
 			$errors = FALSE;  
 			$messages[]='ok';
 			if (empty($_POST['name'])) {
@@ -292,12 +289,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			}
 	  
 		  if ($errors) {
-			// При наличии ошибок перезагружаем страницу и завершаем работу скрипта.
 			header('Location: index.php');
 			exit();
 		  }
 		  else{
-			// Удаляем Cookies с признаками ошибок.
 			setcookie('name_error', '', 100000);
 			setcookie('email_error', '', 100000);
 			setcookie('date_error', '', 100000);
@@ -307,8 +302,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			setcookie('osebe_error', '', 100000);
 			setcookie('kontract_error', '', 100000);
 		  }
-		  // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
-			//если залогинились и изменяем данные
 			if (!empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
 			  setcookie('login', $login);
 			  setcookie('pass', $pass);
@@ -396,17 +389,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 				print('Error : ' . $t->getosebe());
 				exit();
 			}
-			// Сохраняем куку с признаком успешного сохранения.
 			setcookie('save', '1');
 			$messages[] = 'Спасибо, результаты сохранены.';
 			header('Location: index.php');
 			}
-			else {//если НОВЫЕ данные
+			else {
 			  $user = 'u20294';
 			  $password = '5205554';
 			  $db = new PDO('mysql:host=localhost;dbname=u20294', $user, $password);
 			  extract($_POST);
-			  // Генерируем уникальный логин и пароль.
 			  $b=TRUE;
 			  try {
 				while($b){
@@ -425,15 +416,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 				setcookie('save', '1');
 				exit();
 			  }
-			  // Сохраняем в Cookies.
 			  setcookie('login', $login);
 			  setcookie('pass', $pass);
 			  extract($_POST);
 			  $user = 'u20294';
 			  $password = '5205554';
 			  $db = new PDO('mysql:host=localhost;dbname=u20294', $user, $password);
-			  /*хэширование пароля
-			  $hash = password_hash($pass, PASSWORD_BCRYPT); */
 			  $name = $_POST['name'];
 			  $email = $_POST['email'];
 			  $date = $_POST['date'];
@@ -520,5 +508,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		setcookie('save', '1');
 		$messages[] = 'Спасибо, результаты сохранены.';
 		header('Location: index.php');
-	}
+		}
+  	  }
 }
